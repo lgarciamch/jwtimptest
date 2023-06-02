@@ -1,0 +1,13 @@
+package com.testing.jwtimp;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class JwtimpApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

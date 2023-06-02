@@ -1,0 +1,112 @@
+application:
+  title: TEST-JWT
+
+logging:
+  level:
+    org:
+      hibernate: ERROR
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      base-path: /api
+    enabled-by-default: true
+
+mch:
+  api: inactive
+  doc:
+    api-info-detail:
+      version: 1.0.0
+      title: JWT Service
+      description: Access points for JWT test
+      #      terms-of-service-url: PRIVATE_TERM_OF_SERVICE_URL
+      license: This is an API for an exclusive use of MCH or its affiliates services
+      #      license-url: LICENSE_SERVICE_URL
+      contact:
+        name: MCH Support
+        url: www.mycommunity.homes
+        email: support@mycommunity.homes
+
+springdoc:
+  swagger-ui:
+    path: /mch-prop-swagger-ui.html
+  use-management-port: true
+  packages-to-scan:
+    - mch.property.impl.controller
+
+spring:
+  profiles:
+    default: default
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_security_jwt?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _historic
+            revision_field_name: revision_number
+            revision_type_field_name: revision_reason
+    show-sql: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://172.31.28.203:3306/spring_security_jwt
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: qa
+  datasource:
+    url: jdbc:mysql://172.31.21.183:3306/spring_security_jwt
+
+mch:
+  api: active
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/testrest?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+application:
+  title: MCH-Property API Service >>>> LOCAL <<<<<<<
+
+mch:
+  api: active
+
+
